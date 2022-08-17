@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace BackEnd.Models
+namespace ConferenceDTO
 {
     public class Speaker
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(200)]

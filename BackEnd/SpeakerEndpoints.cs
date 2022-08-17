@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using BackEnd.Models;
-namespace BackEnd;
+using BackEnd.Data;
+//using BackEnd.Infrastacure;
+namespace BackEnd.Endpoints;
 
 public static class SpeakerEndpoints
 {
@@ -8,61 +9,27 @@ public static class SpeakerEndpoints
     {
         routes.MapGet("/api/Speaker", async (ApplicationDbContext db) =>
         {
-            return await db.Speakers.ToListAsync();
+            var speaker = await db.Speakers.AsNoTracking()
+                                           .Include(s => s.SessionSpeakers)
+                                           .ThenInclude(ss => ss.Session)
+                                           .Select(s => s.MapSeakerResponse())
+                                           .ToListAsync();
+            return speaker;
         })
         .WithTags("Speaker").WithName("GetAllSpeakers")
         .Produces<List<Speaker>>(StatusCodes.Status200OK);
 
         routes.MapGet("/api/Speaker/{id}", async (int id, ApplicationDbContext db) =>
         {
-            return await db.Speakers.FindAsync(id)
-                is Speaker model
-                    ? Results.Ok(model)
-                    : Results.NotFound();
+            return await db.Speakers.AsNoTracking()
+                                           .Include(s => s.SessionSpeakers)
+                                           .ThenInclude(ss => ss.Session)
+                                           .SingleOrDefaultAsync(s => s.Id == id)
+                                is Speaker model
+                                    ? Results.Ok(model.MapSeakerResponse())
+                                    : Results.NotFound();
         })
         .WithTags("Speaker").WithName("GetSpeakerById")
-        .Produces<Speaker>(StatusCodes.Status200OK)
-        .Produces(StatusCodes.Status404NotFound);
-
-        routes.MapPut("/api/Speaker/{id}", async (int id, Speaker speaker, ApplicationDbContext db) =>
-        {
-            var foundModel = await db.Speakers.FindAsync(id);
-
-            if (foundModel is null)
-            {
-                return Results.NotFound();
-            }
-            //update model properties here
-
-            await db.SaveChangesAsync();
-
-            return Results.NoContent();
-        })
-        .WithTags("Speaker").WithName("UpdateSpeaker")
-        .Produces(StatusCodes.Status404NotFound)
-        .Produces(StatusCodes.Status204NoContent);
-
-        routes.MapPost("/api/Speaker/", async (Speaker speaker, ApplicationDbContext db) =>
-        {
-            db.Speakers.Add(speaker);
-            await db.SaveChangesAsync();
-            return Results.Created($"/Speakers/{speaker.id}", speaker);
-        })
-        .WithTags("Speaker").WithName("CreateSpeaker")
-        .Produces<Speaker>(StatusCodes.Status201Created);
-
-        routes.MapDelete("/api/Speaker/{id}", async (int id, ApplicationDbContext db) =>
-        {
-            if (await db.Speakers.FindAsync(id) is Speaker speaker)
-            {
-                db.Speakers.Remove(speaker);
-                await db.SaveChangesAsync();
-                return Results.Ok(speaker);
-            }
-
-            return Results.NotFound();
-        })
-        .WithTags("Speaker").WithName("DeleteSpeaker")
         .Produces<Speaker>(StatusCodes.Status200OK)
         .Produces(StatusCodes.Status404NotFound);
     }

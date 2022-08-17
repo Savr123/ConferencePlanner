@@ -25,4 +25,8 @@
     <Folder Include="Endpoints\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ConferenceDTO\ConferenceDTO.csproj" />
+  </ItemGroup>
+
 </Project>

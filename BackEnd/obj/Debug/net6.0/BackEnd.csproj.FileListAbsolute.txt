@@ -280,3 +280,5 @@ D:\Repositories\Conference Planner\BackEnd\obj\Debug\net6.0\refint\BackEnd.dll
 D:\Repositories\Conference Planner\BackEnd\obj\Debug\net6.0\BackEnd.pdb
 D:\Repositories\Conference Planner\BackEnd\obj\Debug\net6.0\BackEnd.genruntimeconfig.cache
 D:\Repositories\Conference Planner\BackEnd\obj\Debug\net6.0\ref\BackEnd.dll
+D:\Repositories\Conference Planner\BackEnd\bin\Debug\net6.0\ConferenceDTO.dll
+D:\Repositories\Conference Planner\BackEnd\bin\Debug\net6.0\ConferenceDTO.pdb

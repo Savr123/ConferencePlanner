@@ -1,4 +1,5 @@
 using BackEnd;
+using BackEnd.Endpoints;
 var builder = WebApplication.CreateBuilder(args);
 
 // Define Connection string to SQLite db.
@@ -6,7 +7,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSqlite<BackEnd.Models.ApplicationDbContext>(connectionString);
+builder.Services.AddSqlite<BackEnd.Data.ApplicationDbContext>(connectionString);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

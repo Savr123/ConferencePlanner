@@ -1,0 +1,12 @@
+D:\Repositories\Conference Planner\ConferenceDTO\bin\Debug\net6.0\ConferenceDTO.deps.json
+D:\Repositories\Conference Planner\ConferenceDTO\bin\Debug\net6.0\ConferenceDTO.dll
+D:\Repositories\Conference Planner\ConferenceDTO\bin\Debug\net6.0\ConferenceDTO.pdb
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.csproj.AssemblyReference.cache
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.AssemblyInfoInputs.cache
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.AssemblyInfo.cs
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.csproj.CoreCompileInputs.cache
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.dll
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\refint\ConferenceDTO.dll
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ConferenceDTO.pdb
+D:\Repositories\Conference Planner\ConferenceDTO\obj\Debug\net6.0\ref\ConferenceDTO.dll
