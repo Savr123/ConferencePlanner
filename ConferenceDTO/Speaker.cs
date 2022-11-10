@@ -10,7 +10,7 @@ namespace ConferenceDTO
         [StringLength(200)]
         public string? Name { get; set; }
 
-        [StringLength(250)]
+        [StringLength(4000)]
         public string? Bio { get; set; }
 
         [StringLength(1000)]

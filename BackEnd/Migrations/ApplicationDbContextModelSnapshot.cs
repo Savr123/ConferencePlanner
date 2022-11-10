@@ -19,12 +19,11 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Data.Attendee", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
@@ -43,7 +42,7 @@ namespace BackEnd.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserName")
                         .IsUnique();
@@ -90,9 +89,6 @@ namespace BackEnd.Migrations
                     b.Property<int>("AttendeeId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("SessionId", "AttendeeId");
 
                     b.HasIndex("AttendeeId");
@@ -105,32 +101,24 @@ namespace BackEnd.Migrations
                     b.Property<int>("SessionId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AttendeeId")
+                    b.Property<int>("SpeakerId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("INTEGER");
+                    b.HasKey("SessionId", "SpeakerId");
 
-                    b.Property<int?>("Speakerid")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("SessionId", "AttendeeId");
-
-                    b.HasIndex("AttendeeId");
-
-                    b.HasIndex("Speakerid");
+                    b.HasIndex("SpeakerId");
 
                     b.ToTable("SessionSpeaker");
                 });
 
             modelBuilder.Entity("BackEnd.Data.Speaker", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Bio")
-                        .HasMaxLength(250)
+                        .HasMaxLength(4000)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
@@ -142,7 +130,7 @@ namespace BackEnd.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Speakers");
                 });
@@ -175,13 +163,13 @@ namespace BackEnd.Migrations
             modelBuilder.Entity("BackEnd.Data.SessionAttendee", b =>
                 {
                     b.HasOne("BackEnd.Data.Attendee", "Attendee")
-                        .WithMany("SessionsAttendee")
+                        .WithMany("SessionsAttendees")
                         .HasForeignKey("AttendeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BackEnd.Data.Session", "Session")
-                        .WithMany("SessionsAttendee")
+                        .WithMany("SessionsAttendees")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -193,37 +181,33 @@ namespace BackEnd.Migrations
 
             modelBuilder.Entity("BackEnd.Data.SessionSpeaker", b =>
                 {
-                    b.HasOne("BackEnd.Data.Attendee", "Attendee")
-                        .WithMany()
-                        .HasForeignKey("AttendeeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("BackEnd.Data.Session", "Session")
-                        .WithMany("SessionsSpeaker")
+                        .WithMany("SessionsSpeakers")
                         .HasForeignKey("SessionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BackEnd.Data.Speaker", null)
+                    b.HasOne("BackEnd.Data.Speaker", "Speaker")
                         .WithMany("SessionSpeakers")
-                        .HasForeignKey("Speakerid");
-
-                    b.Navigation("Attendee");
+                        .HasForeignKey("SpeakerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Session");
+
+                    b.Navigation("Speaker");
                 });
 
             modelBuilder.Entity("BackEnd.Data.Attendee", b =>
                 {
-                    b.Navigation("SessionsAttendee");
+                    b.Navigation("SessionsAttendees");
                 });
 
             modelBuilder.Entity("BackEnd.Data.Session", b =>
                 {
-                    b.Navigation("SessionsAttendee");
+                    b.Navigation("SessionsAttendees");
 
-                    b.Navigation("SessionsSpeaker");
+                    b.Navigation("SessionsSpeakers");
                 });
 
             modelBuilder.Entity("BackEnd.Data.Speaker", b =>

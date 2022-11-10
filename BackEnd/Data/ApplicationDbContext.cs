@@ -13,8 +13,8 @@ namespace BackEnd.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Attendee>()
-                .HasIndex(a => a.UserName)
-                .IsUnique();
+                        .HasIndex(a => a.UserName)
+                        .IsUnique();
 
             //Many-to-Many: Session <-> Attendee
             modelBuilder.Entity<SessionAttendee>()
@@ -22,7 +22,7 @@ namespace BackEnd.Data
 
             //Many-to-many: Speaker <-> Session
             modelBuilder.Entity<SessionSpeaker>()
-                .HasKey(ca => new { ca.SessionId, ca.AttendeeId });
+                .HasKey(ca => new { ca.SessionId, ca.SpeakerId });
         }
 
         public DbSet<Session> Sessions => Set<Session>();
