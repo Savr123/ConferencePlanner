@@ -13,7 +13,10 @@ namespace FrontEnd.Pages
 
         public bool IsAdmin { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
 
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
         public IEnumerable<IGrouping<DateTimeOffset?, SessionResponse>> Sessions { get; set; } = null!;
         public IEnumerable<(int Offset, DayOfWeek? DayofWeek)> DayOffsets { get; set; } = null!;
         public int CurrentDayOffset { get; set; }

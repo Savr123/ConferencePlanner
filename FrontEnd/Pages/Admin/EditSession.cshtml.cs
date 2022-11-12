@@ -10,12 +10,15 @@ namespace FrontEnd.Pages.Admin
         [BindProperty]
         public Session Session { get; set; }
         private readonly IApiClient _apiClient;
+        [TempData]
+        public string Message { get; set; }
+        public bool ShowMessage => !string.IsNullOrEmpty(Message);
         public EditSessionModel(IApiClient apiClient)
         {
             _apiClient = apiClient;
         }
 
-        public async void OnGet(int id)
+        public async Task OnGetAsync(int id)
         {
             var session = await _apiClient.GetSessionAsync(id);
             Session = new Session
@@ -35,18 +38,20 @@ namespace FrontEnd.Pages.Admin
             {
                 return Page();
             }
+            Message = "Session updated successfully!";
             await _apiClient.PutSessionAsync(Session);
 
             return Page();
         }
 
-        public async Task<IActionResult> OnPostDelete(int id)
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var session = await _apiClient.GetSessionAsync(id);
             if (session != null)
             {
                 await _apiClient.DeleteSessionAsync(id);
             }
+            Message = "Session deleted successfully!";
 
             return Page();
         }

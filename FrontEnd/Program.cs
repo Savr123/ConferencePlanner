@@ -6,10 +6,10 @@ using FrontEnd.Services;
 using FrontEnd.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-var connectionString = builder.Configuration.GetConnectionString("IdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityDbContextConnection' not found.");
+var connectionString = "Data Source = security.db";
 
 builder.Services.AddDbContext<IdentityDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlite(connectionString));
 
 
 builder.Services.AddSingleton<IAdminService, AdminService>();
