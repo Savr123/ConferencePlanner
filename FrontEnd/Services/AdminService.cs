@@ -39,7 +39,6 @@ public class AdminService: IAdminService
                 // There are no admin users so enable admin creation
                 return true;
             }
-            
         }
     }
 }

@@ -1,5 +1,10 @@
-﻿using ConferenceDTO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using ConferenceDTO;
 
 namespace FrontEnd.Services;
 
@@ -90,10 +95,38 @@ public class ApiClient: IApiClient
         response.EnsureSuccessStatusCode();
     }
 
-    public async Task<List<SearchResult>> SearchAsync(string term) {
-        var response = await _httpClient.GetAsync($"/api/Search/{term}");
+    public async Task<List<SearchResult>> SearchAsync(string query) {
+
+        var term = new SearchTerm
+        {
+            Query = query
+        };
+        var response = await _httpClient.PostAsJsonAsync($"/api/Search/", term);
         response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<List<SearchResult>>() ?? new();
+        return await response.Content.ReadAsAsync<List<SearchResult>>();
+    }
+
+    public async Task AddSessionToAttendeeAsync(string name, int sessionId)
+    {
+        var response = await _httpClient.PostAsync($"/api/attendee/{name}/session/{sessionId}", null);
+        
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task RemoveSessionFromAttendeeAsync(string name, int sessionId)
+    {
+        var response = await _httpClient.DeleteAsync($"/api/attendee/{name}/session/{sessionId}");
+
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task<List<SessionResponse>> GetSessionsByAttendeeAsync(string name)
+    {
+        var response = await _httpClient.GetAsync($"/api/Attendee/{name}/sessions");
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsAsync<List<SessionResponse>>();
     }
 
 }

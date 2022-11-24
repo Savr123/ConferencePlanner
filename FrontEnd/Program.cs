@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using FrontEnd.Data;
 using FrontEnd.Services;
 using FrontEnd.Areas.Identity;
+using FrontEnd.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = "Data Source = security.db";
@@ -39,6 +40,7 @@ builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
     client.BaseAddress = new Uri(builder.Configuration["serviceUrl"]);
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,6 +50,7 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -56,6 +59,12 @@ app.UseRouting();
 app.UseAuthentication();;
 app.UseAuthorization();
 
+app.UseMiddleware<RequireLoginMiddleware>();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+});
 app.MapRazorPages();
 
 app.Run();

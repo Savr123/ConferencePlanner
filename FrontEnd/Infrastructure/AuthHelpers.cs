@@ -21,6 +21,12 @@ namespace System.Security.Claims
             principal.Identities.First().MakeAdmin();
         public static void MakeAdmin(this ClaimsIdentity identity) =>
             identity.AddClaim(new Claim(AuthConstants.isAdmin, AuthConstants.TrueValue));
+        public static bool isAttendee(this ClaimsPrincipal principal) => 
+            principal.HasClaim(AuthConstants.isAttendee, AuthConstants.TrueValue);
+        public static void MakeAttendee(this ClaimsPrincipal principal) =>
+            principal.Identities.First().MakeAttendee();
+        public static void MakeAttendee(this ClaimsIdentity identity) =>
+            identity.AddClaim(new Claim(AuthConstants.isAttendee, AuthConstants.TrueValue));
     }
 }
 

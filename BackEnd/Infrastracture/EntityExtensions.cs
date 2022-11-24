@@ -10,7 +10,7 @@ namespace BackEnd.Data
                 Title = session.Title,
                 EndTime = session.EndTime,
                 StartTime = session.StartTime,
-                Speakers = session.SessionsSpeakers?.Select(
+                Speakers = session.SessionSpeakers?.Select(
                     ss => new ConferenceDTO.Speaker
                     {
                         Id = ss.SpeakerId,

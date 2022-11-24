@@ -55,10 +55,10 @@ namespace BackEnd
                     Abstract = item["abstract"].Value<string>()
                 };
 
-                session.SessionsSpeakers = new List<SessionSpeaker>();
+                session.SessionSpeakers = new List<SessionSpeaker>();
                 foreach (var sp in theseSpeakers)
                 {
-                    session.SessionsSpeakers.Add(new SessionSpeaker
+                    session.SessionSpeakers.Add(new SessionSpeaker
                     {
                         Session = session,
                         Speaker = sp

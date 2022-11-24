@@ -1,5 +1,9 @@
 using BackEnd;
-using BackEnd.Endpoints;
+using BackEnd.Controllers;
+using BackEnd.Data;
+using System.Text.Json.Serialization;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Define Connection string to SQLite db.
@@ -10,6 +14,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddSqlite<BackEnd.Data.ApplicationDbContext>(connectionString);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks()
+                .AddDbContextCheck<ApplicationDbContext>();
+
+builder.Services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
 var app = builder.Build();
 
@@ -20,9 +32,17 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
-app.MapSpeakerEndpoints();
-app.MapAttendeeEndpoints();
-app.MapSessionEndpoints();
+app.UseRouting();
+
+app.UseEndpoints( endpoints => {
+    endpoints.MapHealthChecks("/health");
+    endpoints.MapControllers();
+});
+
+
+
+
 
 app.Run();
