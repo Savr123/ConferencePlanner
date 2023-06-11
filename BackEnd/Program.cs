@@ -1,6 +1,7 @@
 using BackEnd;
 using BackEnd.Controllers;
 using BackEnd.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 
@@ -13,9 +14,13 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddSqlite<BackEnd.Data.ApplicationDbContext>(connectionString);
 builder.Services.AddEndpointsApiExplorer();
+
+
+
 builder.Services.AddSwaggerGen();
-builder.Services.AddHealthChecks()
-                .AddDbContextCheck<ApplicationDbContext>();
+builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+builder.Services.AddHealthChecks();
+                //.AddDbContextCheck<ApplicationDbContext>();
 
 builder.Services.AddControllers()
                 .AddJsonOptions(options =>

@@ -30,7 +30,7 @@ namespace BackEnd.Controllers
             {
                 return NotFound();
             }
-
+            
             var result = attendee.MapAttendeeResponse();
 
             return result;

@@ -5,6 +5,7 @@ using FrontEnd.Data;
 using FrontEnd.Services;
 using FrontEnd.Areas.Identity;
 using FrontEnd.Middleware;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = "Data Source = security.db";
@@ -34,6 +35,11 @@ builder.Services.AddRazorPages(options =>
     options.Conventions.AuthorizeFolder("/Admin", "Admin");
 });
 
+builder.Services.AddSignalR();
+builder.Services.AddResponseCompression(options =>
+{
+    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/octet-stream" });
+});
 
 builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
 {
